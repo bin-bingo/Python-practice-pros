@@ -15,6 +15,7 @@ all_users_data
 [description]
 '''
 while True:
+    # 登录界面
     print('Please sign in or sign up\n')
     login_user = input('username:')
     login_password = int(input('password:'))
@@ -24,28 +25,25 @@ while True:
         print(all_users_data)
     pass
 
-    while all_users_data.__contains__(login_user):
+    if all_users_data.__contains__(login_user):
         error = 0
-        if all_users_data[login_user][2] == 1:
-            print('your account has been locked!!!!')
-            break
-        elif login_password == all_users_data[login_user][1]:
-            print('\nwelcome' + login_user + 'login...')
-            break
-
-            all_users_data[login_user][2] = 1
-            with open('user.json', 'w') as f:
-                json.dump(all_users_data, f)
-        else:
-            error += 1
-            if error < 3:
-                print('\nplease try again')
-            else:
-                all_users_data[login_user][2] = 1
-                with open('user.json', 'w') as f:
-                    json.dump(all_users_data, f)
+        while True:
+            if all_users_data[login_user][2] == 1:
                 print('your account has been locked!!!!')
                 break
+            if login_password == all_users_data[login_user][1]:
+                print('\nwelcome' + login_user + 'login...')
+                break
+            else:
+                error += 1
+                if error < 3:
+                    print('\nplease try again')
+                    login_user = input('username:')
+                    login_password = int(input('password:'))
+                else:
+                    all_users_data[login_user][2] = 1
+                    with open('user.json', 'w') as f:
+                        json.dump(all_users_data, f)
     else:
         while True:
             pass
